@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { api } from "@/trpc/react"; // tRPC 사용
+import { api } from "@/trpc/react";
 
 export default function RegisterForm({ onToggle }: { onToggle: () => void }) {
   const [error, setError] = useState("");
