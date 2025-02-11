@@ -5,11 +5,13 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm({ onToggle }: { onToggle: () => void }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     setError("");
 
     const formData = new FormData(event.currentTarget);
@@ -24,6 +26,7 @@ export default function LoginForm({ onToggle }: { onToggle: () => void }) {
 
     if (res?.error) {
       setError("Invalid email or password.");
+      setIsLoading(false);
     } else {
       router.push("/dashboard");
     }
@@ -39,6 +42,7 @@ export default function LoginForm({ onToggle }: { onToggle: () => void }) {
           placeholder="Email"
           required
           className="w-full rounded border p-2"
+          disabled={isLoading}
         />
         <input
           name="password"
@@ -46,18 +50,24 @@ export default function LoginForm({ onToggle }: { onToggle: () => void }) {
           placeholder="Password"
           required
           className="w-full rounded border p-2"
+          disabled={isLoading}
         />
         <button
           type="submit"
-          className="w-full rounded bg-blue-500 p-2 text-white"
+          disabled={isLoading}
+          className="w-full rounded bg-blue-500 p-2 text-white disabled:bg-gray-400"
         >
-          Sign In
+          {isLoading ? "Logging in..." : "Log in"}
         </button>
         {error && <p className="mt-2 text-red-500">{error}</p>}
       </form>
       <p className="mt-4 text-center text-sm">
         Don&apos;t have an account?{" "}
-        <button onClick={onToggle} className="text-blue-500 underline">
+        <button
+          onClick={onToggle}
+          className="text-blue-500 underline"
+          disabled={isLoading}
+        >
           Sign Up
         </button>
       </p>

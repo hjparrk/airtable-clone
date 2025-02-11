@@ -35,6 +35,7 @@ export default function RegisterForm({ onToggle }: { onToggle: () => void }) {
           type="email"
           placeholder="Email"
           required
+          disabled={isPending}
           className="w-full rounded border p-2"
         />
         <input
@@ -42,10 +43,12 @@ export default function RegisterForm({ onToggle }: { onToggle: () => void }) {
           type="password"
           placeholder="Password"
           required
+          disabled={isPending}
           className="w-full rounded border p-2"
         />
         <button
           type="submit"
+          disabled={isPending}
           className="w-full rounded bg-green-500 p-2 text-white"
         >
           {isPending ? "Registering..." : "Register"}
