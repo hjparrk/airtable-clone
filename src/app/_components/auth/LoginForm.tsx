@@ -28,7 +28,7 @@ export default function LoginForm({ onToggle }: { onToggle: () => void }) {
       setError("Invalid email or password.");
       setIsLoading(false);
     } else {
-      router.push("/dashboard");
+      router.push("/workspace");
     }
   };
 
