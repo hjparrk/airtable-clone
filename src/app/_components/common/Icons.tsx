@@ -19,6 +19,8 @@ import {
   BsChevronRight,
   BsStar,
   BsBorderAll,
+  BsThreeDots,
+  BsClockHistory,
 } from "react-icons/bs";
 
 export const Icons = {
@@ -31,6 +33,7 @@ export const Icons = {
   Down: BsChevronDown,
   Globe: BsGlobe,
   Help: BsQuestionCircle,
+  History: BsClockHistory,
   Home: BsHouseDoor,
   Marketplace: BsBagCheck,
   Menu: BsList,
@@ -41,5 +44,6 @@ export const Icons = {
   Settings: BsGear,
   Star: BsStar,
   Trash: BsTrash,
+  ThreeDots: BsThreeDots,
   Import: BsUpload,
 };

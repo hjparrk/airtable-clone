@@ -10,14 +10,14 @@ export default function WorkspaceMain({
   return (
     <main
       className={cn(
-        "relative flex w-full justify-between gap-2 bg-gray-50 p-10",
+        "relative flex w-screen justify-between gap-2 bg-gray-50 p-10",
         isSmallScreen ? "ml-12" : null,
       )}
     >
       {/* Left Section: Workspace Title & Bases */}
-      <section className="flex flex-1 flex-col pr-8">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          Workspace
+      <section className="flex min-w-[600px] max-w-7xl flex-1 flex-col pr-8">
+        <h1 className="flex items-center gap-2 text-3xl font-bold">
+          My First Workspace
           <span className="inline-flex items-center rounded bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-700">
             FREE PLAN <span className="mx-1">•</span>
             <button className="text-xs font-semibold text-blue-600 hover:underline">
@@ -27,7 +27,7 @@ export default function WorkspaceMain({
           <Icons.Star className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700" />
         </h1>
 
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-2 flex items-center justify-between text-xs">
           <div className="flex items-center gap-6 text-sm text-gray-600">
             <button className="flex items-center gap-1 hover:underline">
               Opened by you <Icons.Down className="h-4 w-4" />
@@ -51,7 +51,7 @@ export default function WorkspaceMain({
       </section>
 
       {/* Right Section: Collaborators */}
-      <section className="flex w-48 flex-col items-start pt-12">
+      <section className="flex w-60 flex-col items-start pt-12">
         <div className="absolute right-24 top-8 flex flex-row gap-1">
           <button className="rounded-md border bg-white px-3 py-1.5 text-sm">
             Share

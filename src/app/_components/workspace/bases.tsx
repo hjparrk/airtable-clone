@@ -4,6 +4,7 @@ import { useState } from "react";
 import { api } from "@/trpc/react";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BaseCreateModal from "@/app/_components/workspace/common/base-create-modal";
+import Base from "./base";
 
 export default function Bases() {
   const { data: bases, isLoading } = api.bases.readAll.useQuery();
@@ -41,12 +42,12 @@ export default function Bases() {
   }
 
   return (
-    <div className="p-6">
-      {bases.map((base) => (
-        <div key={base.id} className="rounded-lg border p-4 shadow-sm">
-          <p className="text-gray-800">{base.name}</p>
-        </div>
-      ))}
+    <div className="py-6 pr-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+        {bases.map((base) => (
+          <Base key={base.id} base={base} />
+        ))}
+      </div>
 
       {isModalOpen && <BaseCreateModal onClose={() => setIsModalOpen(false)} />}
     </div>

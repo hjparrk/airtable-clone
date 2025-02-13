@@ -4,7 +4,7 @@ import { Icons } from "../common/Icons";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between border-b border-gray-300 px-4 py-4 shadow-sm">
+    <nav className="flex items-center justify-between border-b border-gray-300 px-4 py-2 shadow-sm">
       {/* Left Side */}
       <div className="flex items-center gap-3">
         <Icons.Menu className="hidden h-6 w-6 cursor-pointer sm:flex" />

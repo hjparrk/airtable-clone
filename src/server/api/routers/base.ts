@@ -8,8 +8,17 @@ export const baseRouter = createTRPCRouter({
       data: {
         name: "Untitled Base",
         userId: ctx.session.user.id,
+        tables: {
+          create: {
+            name: "Table 1",
+          },
+        },
+      },
+      include: {
+        tables: true,
       },
     });
+
     return base;
   }),
 

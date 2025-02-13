@@ -1,12 +1,14 @@
 "use client";
 
 import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 export default function BaseCreateModal({ onClose }: { onClose: () => void }) {
+  const router = useRouter();
+
   const { mutate: createBase, isPending } = api.bases.create.useMutation({
-    onSuccess: () => {
-      // TODO
-      alert("Base Created");
+    onSuccess: (base) => {
+      router.push(`/${base.id}/${base.tables[0]?.id}`);
     },
     onError: (error) => {
       // TODO
@@ -36,19 +38,25 @@ export default function BaseCreateModal({ onClose }: { onClose: () => void }) {
 
         {/* Content */}
         <div className="mt-4 flex gap-4">
-          <div className="flex-1 cursor-pointer rounded-lg border p-4 hover:shadow-lg">
+          <button className="flex-1 cursor-pointer rounded-lg border p-4 hover:shadow-lg">
             <p className="font-medium">Build an app with AI</p>
             <p className="mt-1 text-xs text-gray-500">
               Cobuilder quickly turns your process into a custom app with data
               and interfaces.
             </p>
-          </div>
-          <div className="flex-1 cursor-pointer rounded-lg border p-4 hover:shadow-lg">
+          </button>
+          <button
+            className="flex-1 cursor-pointer rounded-lg border p-4 hover:shadow-lg"
+            onClick={() => {
+              createBase();
+            }}
+            disabled={isPending}
+          >
             <p className="font-medium">Start from scratch</p>
             <p className="mt-1 text-xs text-gray-500">
               Build your ideal workflow starting with a blank table.
             </p>
-          </div>
+          </button>
         </div>
       </div>
     </div>
