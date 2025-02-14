@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation";
 export default function BaseCreateModal({ onClose }: { onClose: () => void }) {
   const router = useRouter();
 
+  const utils = api.useUtils();
   const { mutate: createBase, isPending } = api.bases.create.useMutation({
-    onSuccess: (base) => {
+    onSuccess: async (base) => {
       router.push(`/${base.id}/${base.tables[0]?.id}`);
+      await utils.bases.readAll.invalidate();
     },
     onError: (error) => {
       // TODO

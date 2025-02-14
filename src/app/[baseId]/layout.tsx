@@ -5,40 +5,44 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Header from "../_components/base/header";
 import Tables from "../_components/base/tables";
+import { useSession } from "next-auth/react";
 
 export default function BaseLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { status } = useSession();
   const router = useRouter();
   const params = useParams();
   const baseId = params.baseId as string;
   const tableId = params.tableId as string;
 
-  const { data: base, isLoading: isBaseLoading } = api.bases.read.useQuery({
-    id: baseId,
-  });
+  const shouldFetch = status === "authenticated";
+
+  const { data: base, isLoading: isBaseLoading } = api.bases.read.useQuery(
+    { id: baseId },
+    { enabled: shouldFetch },
+  );
 
   const { data: tables, isLoading: isTablesLoading } =
-    api.tables.readAll.useQuery({
-      baseId,
-    });
+    api.tables.readAll.useQuery({ baseId }, { enabled: shouldFetch });
 
   useEffect(() => {
-    if (!isBaseLoading && !base) {
-      router.replace("/not-found");
+    if (status === "unauthenticated") {
+      router.push("/");
     }
-    if (!isTablesLoading && tables?.length === 0) {
-      router.replace("/not-found");
-    }
-  }, [isBaseLoading, isTablesLoading, base, tables, router]);
+  }, [status, router]);
 
   useEffect(() => {
     if (!isTablesLoading && tables?.length && !tableId) {
       router.replace(`/${baseId}/${tables[0]?.id}`);
     }
   }, [isTablesLoading, tables, baseId, tableId, router]);
+
+  if (status === "loading" || status === "unauthenticated") {
+    return null;
+  }
 
   if (isBaseLoading)
     return (
@@ -59,8 +63,8 @@ export default function BaseLayout({
         <Tables baseId={baseId} tableId={tableId} tables={tables} />
       )}
 
-      {/* Table Content */}
-      <main className="flex-1">{children}</main>
+      {/* Table Page */}
+      <main className="h-full">{children}</main>
     </div>
   );
 }
