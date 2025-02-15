@@ -1,6 +1,9 @@
+"use client";
+
 import type { Table } from "@prisma/client";
 import { Icons } from "../common/Icons";
 import { useRouter } from "next/navigation";
+import { api } from "@/trpc/react";
 
 export default function Tables({
   baseId,
@@ -12,6 +15,18 @@ export default function Tables({
   tables: Table[];
 }) {
   const router = useRouter();
+  const utils = api.useUtils();
+
+  const { mutate: createTable, isPending } = api.tables.create.useMutation({
+    onSuccess: async (table) => {
+      router.push(`/${baseId}/${table.id}`);
+      await utils.tables.readAll.invalidate();
+    },
+    onError: (error) => {
+      // TODO
+      alert(error.message);
+    },
+  });
 
   return (
     <div className="flex w-full gap-2 bg-green-700">
@@ -38,7 +53,12 @@ export default function Tables({
         <button className="flex w-12 items-center justify-center text-white hover:bg-green-900">
           <Icons.Down className="h-3 w-3" />
         </button>
-        <button className="flex w-12 items-center justify-center text-white hover:bg-green-900">
+        <button
+          className="flex w-12 items-center justify-center text-white hover:bg-green-900"
+          onClick={() => {
+            createTable({ baseId });
+          }}
+        >
           <Icons.Add className="h-3 w-3" />
         </button>
       </section>

@@ -2,7 +2,7 @@ import { Icons } from "../common/Icons";
 
 export default function Sidebar() {
   return (
-    <div className="flex h-full w-72 flex-col justify-between border-r border-gray-200 px-4 pb-6 pt-2 text-sm">
+    <div className="flex h-full w-80 flex-col justify-between border-t border-gray-200 px-4 pb-6 pt-2 text-sm">
       {/* Upper */}
       <div className="flex min-h-[144px] flex-col">
         <div className="flex flex-row items-center gap-2 px-3 py-2 text-gray-500">
